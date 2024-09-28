@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>my web</title>
+  <script>
+        let bigBang=new Date();      
+    </script> 
+    <style>
+        *{
+            border:2px solid #059a4373;
+            margin: 0;
+            padding: 0;
+            font-size: 35px;
+            text-align: center;
+        }
+        p{
+            border: 1px solid blueviolet ;
+        }
+        body{
+            height: 90vh;        
+        }
+        header{
+            height: 12vh;
+            font-size: calc(0.5em+6vm);
+            background-color: antiquewhite;
+        }
+        main{
+            height: 75vh;
+            color: blueviolet;
+            background-color: aliceblue;
+        }
+        footer{
+            font-size: 0.5em;
+            height: 5vh;
+            color: rgb(2, 147, 203);
+            background-color: rgb(55,55,55);
+        }
+    </style>
+     <script>
+        console.log("加载css代码："+(new Date()-bigBang)+'ms!');
+    </script>
+    <script>
+        let Model = {} ;
+        Model.cet6String = '' ;
+        Model.CET6 = [] ;
+        Model.cetUrl = ['cet/cet1.txt','cet/cet2.txt','cet/cet3.txt'];
+        for(let i=0; i<Model.cetUrl.length; i++){
+            fetch(Model.cetUrl[i])
+            .then(res => res.text())
+            .then(txt => {
+                Model.cet6String += txt ;
+                UI.log('单词库：' + Model.cetUrl[i] + ' 加载成功!') ;       
+            });
+          } ;
+    </script>
+</head>
+<body>
+    <header>
+        web work
+    </header>
+    <nav>
+        <button id="randWord">随机单词</button>
+        <button id="loadWord">读入单词</button>
+    </nav>
+    <main>
+        <p id="word">abandon</p>
+        <p id="pron">/ə'bændən/</p>
+        <p id="chinese">vt.离弃,丢弃;遗弃,抛弃;放弃</p>
+    </main>
+    <footer>
+        my information :韩雨彤 22计科二班
+    </footer>
+    <script>
+        let UI = {} ;
+         UI.log = function(s){
+         select('footer').textContent = s ;
+         } ;
+         UI.headerLog = function(s){
+         select('header').textContent = s ;
+         } ;
+         select('button#loadWord').onclick = function(){
+           Model.CET6 = Model.cet6String.split('\r\n') ;
+   
+           if(Model.CET6.length < 5000){
+               UI.log("单词没有完全读入，Please wait!");
+           }else{
+               UI.log("我已经读入了"+ Model.CET6.length + "单词!")
+           }
+           
+         } ;
+         select('button#randWord').onclick = function(){
+            Model.CET6 = Model.cet6String.split('\r\n') ;
+           if(Model.CET6.length < 5000){
+               UI.log("请点“读入单词”按钮");
+           }else{
+               let rand = Math.floor(Math.random() * Model.CET6.length) ;
+               UI.headerLog(Model.CET6[rand] ) ;
+               UI.log("我已经读入了"+ Model.CET6.length + "单词!")
+           }
+           
+         } ;
+        function select(selector){
+           let dom = document.querySelector(selector) ;
+           return dom ;
+         }    
+        //  ocument.body.style.height=innerHeight-25+'px';
+        "498px"
+         console.log("渲染css代码:"+(new Date()-bigBang)+"ms!");
+         let timer=new Date();
+         for(let i=1;i<1e8;i++){
+
+         } 
+         console.log("cpu从1数到1亿:"+(new Date()-timer)+"ms!");
+     let strCET6 = '' ;
+     let arrCET6 = [] ;
+     fetch('cet/cet6.txt')
+     .then(res => res.text())
+     .then(txt => {
+                   strCET6 = txt ;
+                   arrCET6 =  strCET6.split('\r\n') ;
+                   let rand = Math.floor(arrCET6.length * Math.random() ) ;
+                   let cetWord = arrCET6[rand] ;
+                   let begin = cetWord.indexOf('\t') ;
+                  let end =  cetWord.lastIndexOf('\t') ;
+                   let word = cetWord.slice(0,begin) ;
+                   let pron = cetWord.slice(begin+1,end) ;
+                   let chinese = cetWord.slice(end+1) ;
+                     select('#word').textContent = word ;
+                     select('#pron').textContent = pron ;
+                      select('#chinese').textContent =chinese ;
+                }) ; 
+
+       </script>
+       
+   
+<!-- //    function select(str){
+//     let dom = document.querySelector(str);
+//     return dom ;
+//         } --> 
+
+    </body>
+</html>
